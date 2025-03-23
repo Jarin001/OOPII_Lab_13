@@ -61,7 +61,12 @@ public class Customer {
      * already registered, program will ask the user
      * to enter new email address to get himself register.
      */
-    public void addNewCustomer() {
+    public void addNewCustomer(){
+        Customer customer = readCustomerData();
+        customerCollection.add(customer);
+    }
+
+    private Customer readCustomerData() {
         System.out.printf("\n\n\n%60s ++++++++++++++ Welcome to the Customer Registration Portal ++++++++++++++", "");
         Scanner read = new Scanner(System.in);
         System.out.print("\nEnter your name :\t");
@@ -82,7 +87,7 @@ public class Customer {
         String address = read.nextLine();
         System.out.print("Enter your age :\t");
         int age = read.nextInt();
-        customerCollection.add(new Customer(name, email, password, phone, address, age));
+       return new Customer(name, email, password, phone, address, age);
     }
 
     /**
