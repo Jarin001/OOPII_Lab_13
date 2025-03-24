@@ -124,12 +124,13 @@ public class User {
                              * Class with required
                              * arguments.....
                              */
-                            
+
                             c1.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Update its Data :\t");
                             String customerID = read1.nextLine();
                             if (customersCollection.size() > 0) {
-                                c1.editUserInfo(customerID);
+                                List<String> details = readCustomerInfo();
+                                c1.editUserInfo(customerID,details);
                             } else {
                                 System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", customerID);
                             }
@@ -410,7 +411,7 @@ public class User {
     }
     public boolean isUniqueData(String emailID) {
         boolean isUnique = false;
-        for (Customer c : customerCollection) {
+        for (Customer c : customersCollection) {
             if (emailID.equals(c.getEmail())) {
                 isUnique = true;
                 break;
