@@ -254,8 +254,8 @@ public class User {
                             }
                             bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
                         } else if (desiredChoice == 2) {
-
-                            c1.editUserInfo(result[1]);
+                            List<String> details = readCustomerInfo();
+                            c1.editUserInfo(result[1],details);
                         } else if (desiredChoice == 3) {
                             System.out.print(
                                     "Are you sure to delete your account...It's an irreversible action...Enter Y/y to confirm...");
@@ -408,7 +408,6 @@ public class User {
         int age = read.nextInt();
         return new Customer(name, email, password, phone, address, age);
     }
-
     public boolean isUniqueData(String emailID) {
         boolean isUnique = false;
         for (Customer c : customerCollection) {
@@ -418,5 +417,28 @@ public class User {
             }
         }
         return isUnique;
+    }
+
+    public static List<String> readCustomerInfo() {
+        Scanner read = new Scanner(System.in);
+        List<String> details = new ArrayList<>();
+
+        System.out.print("\nEnter the new name of the Passenger:\t");
+        details.add(read.nextLine());
+
+        System.out.print("Enter the new email address:\t");
+        details.add(read.nextLine());
+
+        System.out.print("Enter the new Phone number:\t");
+        details.add(read.nextLine());
+
+        System.out.print("Enter the new address:\t");
+        details.add(read.nextLine());
+
+        System.out.print("Enter the new age:\t");
+        details.add(String.valueOf(read.nextInt()));
+
+        read.nextLine();
+        return details;
     }
 }
