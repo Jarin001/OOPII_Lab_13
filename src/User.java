@@ -410,7 +410,7 @@ public class User {
         int age = read.nextInt();
         return new Customer(name, email, password, phone, address, age);
     }
-    public boolean isUniqueData(String emailID) {
+    public static boolean isUniqueData(String emailID) {
         boolean isUnique = false;
         for (Customer c : customersCollection) {
             if (emailID.equals(c.getEmail())) {
@@ -420,7 +420,6 @@ public class User {
         }
         return isUnique;
     }
-
     public static List<String> readCustomerInfo() {
         Scanner read = new Scanner(System.in);
         List<String> details = new ArrayList<>();
