@@ -383,4 +383,40 @@ public class User {
     public static List<Customer> getCustomersCollection() {
         return customersCollection;
     }
+
+    public static Customer readCustomerData()
+    {
+        System.out.printf("\n\n\n%60s ++++++++++++++ Welcome to the Customer Registration Portal ++++++++++++++", "");
+        Scanner read = new Scanner(System.in);
+        System.out.print("\nEnter your name :\t");
+        String name = read.nextLine();
+        System.out.print("Enter your email address :\t");
+        String email = read.nextLine();
+        while (isUniqueData(email)) {
+            System.out.println(
+                    "ERROR!!! User with the same email already exists... Use new email or login using the previous credentials....");
+            System.out.print("Enter your email address :\t");
+            email = read.nextLine();
+        }
+        System.out.print("Enter your Password :\t");
+        String password = read.nextLine();
+        System.out.print("Enter your Phone number :\t");
+        String phone = read.nextLine();
+        System.out.print("Enter your address :\t");
+        String address = read.nextLine();
+        System.out.print("Enter your age :\t");
+        int age = read.nextInt();
+        return new Customer(name, email, password, phone, address, age);
+    }
+
+    public boolean isUniqueData(String emailID) {
+        boolean isUnique = false;
+        for (Customer c : customerCollection) {
+            if (emailID.equals(c.getEmail())) {
+                isUnique = true;
+                break;
+            }
+        }
+        return isUnique;
+    }
 }
