@@ -105,8 +105,9 @@ public class User {
                         desiredOption = read.nextInt();
                         /* If 1 is entered by the privileged user, then add a new customer...... */
                         if (desiredOption == 1) {
-                           
-                            c1.addNewCustomer();
+                            Customer customer = readCustomerData();
+
+                            c1.addNewCustomer(customer);
                         } else if (desiredOption == 2) {
                             /*
                              * If 2 is entered by the privileged user, then call the search method of the
@@ -294,8 +295,8 @@ public class User {
                             "");
                 }
             } else if (desiredOption == 4) {
-
-                c1.addNewCustomer();
+                Customer customer = readCustomerData();
+                c1.addNewCustomer(customer);
             } else if (desiredOption == 5) {
                 manualInstructions();
             }
