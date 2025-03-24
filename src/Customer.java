@@ -61,8 +61,7 @@ public class Customer {
      * already registered, program will ask the user
      * to enter new email address to get himself register.
      */
-    public void addNewCustomer(){
-        Customer customer = readCustomerData();
+    public void addNewCustomer(Customer customer) {
         customerCollection.add(customer);
     }
 
