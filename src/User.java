@@ -27,10 +27,11 @@ public class User {
     public static void main(String[] args) {
         int countNumOfUsers = 1;
         RolesAndPermissions r1 = new RolesAndPermissions();
-        Flight f1 = new Flight();
+        FlightManager f1 = new FlightManager();
         FlightReservation bookingAndReserving = new FlightReservation();
         Customer c1 = new Customer();
         f1.flightScheduler();
+        CustomerService customerService = new CustomerService(c1);
         Scanner read = new Scanner(System.in);
 
        
