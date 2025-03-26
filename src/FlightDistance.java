@@ -1,17 +1,30 @@
-public abstract class FlightDistance {
-    public abstract String toString(int i);
+public class FlightDistance {
 
-    public abstract String[] calculateDistance(double lat1, double lon1, double lat2, double lon2);
+    public static String[] calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+        final double EARTH_RADIUS_MILES = 3958.8; // Radius of Earth in miles
+        final double EARTH_RADIUS_KM = 6371.0; // Radius of Earth in km
+        final double EARTH_RADIUS_NAUTICAL_MILES = 3440.1; // Radius in nautical miles
 
-    public void displayMeasurementInstructions(){
-        String symbols = "+---------------------------+";
-        System.out.printf("\n\n %100s\n %100s", symbols, "| SOME IMPORTANT GUIDELINES |");
-        System.out.printf("\n %100s\n", symbols);
-        System.out.println("\n\t\t1. Distance between the destinations are based upon the Airports Coordinates(Latitudes && Longitudes) based in those cities\n");
-        System.out.println("\t\t2. Actual Distance of the flight may vary from this approximation as Airlines may define their on Travel Policy that may restrict the planes to fly through specific regions...\n");
-        System.out.println("\t\t3. Flight Time depends upon several factors such as Ground Speed(GS), AirCraft Design, Flight Altitude and Weather. Ground Speed for these calculations is 450 Knots...\n");
-        System.out.println("\t\t4. Expect reaching your destination early or late from the Arrival Time. So, please keep a margin of ±1 hour...\n");
-        System.out.println("\t\t5. The departure time is the moment that your plane pushes back from the gate, not the time it takes off. The arrival time is the moment that your plane pulls into the gate, not the time\n\t\t   it touches down on the runway...\n");
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Calculate distances in different units
+        double distanceMiles = EARTH_RADIUS_MILES * c;
+        double distanceKm = EARTH_RADIUS_KM * c;
+        double distanceNauticalMiles = EARTH_RADIUS_NAUTICAL_MILES * c;
+
+        // Format the results
+        return new String[]{
+                String.format("%.2f", distanceMiles),
+                String.format("%.2f", distanceKm),
+                String.format("%.2f", distanceNauticalMiles)
+        };
     }
 
 }
