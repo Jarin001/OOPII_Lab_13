@@ -5,7 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class Flight extends FlightDistance {
+public class Flight extends FlightDistance{
+
+    //        ************************************************************ Fields ************************************************************
 
     private final String flightSchedule;
     private final String flightNumber;
@@ -21,6 +23,8 @@ public class Flight extends FlightDistance {
     static int nextFlightDay = 0;
     private static final List<Flight> flightList = new ArrayList<>();
 
+    //        ************************************************************ Behaviours/Methods ************************************************************
+
     Flight() {
         this.flightSchedule = null;
         this.flightNumber = null;
@@ -30,6 +34,16 @@ public class Flight extends FlightDistance {
         this.gate = null;
     }
 
+    /**
+     * Creates new random flight from the specified arguments.
+     *
+     * @param flightSchedule           includes departure date and time of flight
+     * @param flightNumber             unique identifier of each flight
+     * @param numOfSeatsInTheFlight    available seats in the flight
+     * @param chosenDestinations       consists of origin and destination airports(cities)
+     * @param distanceBetweenTheCities gives the distance between the airports both in miles and kilometers
+     * @param gate                     from where passengers will board to the aircraft
+     */
     Flight(String flightSchedule, String flightNumber, int numOfSeatsInTheFlight, String[][] chosenDestinations, String[] distanceBetweenTheCities, String gate) {
         this.flightSchedule = flightSchedule;
         this.flightNumber = flightNumber;
@@ -70,10 +84,10 @@ public class Flight extends FlightDistance {
         return (rad * 180.0 / Math.PI);
     }
 
-    @Override
     public String toString(int i) {
         return String.format("| %-5d| %-41s | %-9s | \t%-9s | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  |  %-8s / %-11s|", i, flightSchedule, flightNumber, numOfSeatsInTheFlight, fromWhichCity, toWhichCity, fetchArrivalTime(), flightTime, gate, distanceInMiles, distanceInKm);
     }
+
 
     public int getNoOfSeats() {
         return numOfSeatsInTheFlight;
