@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Customer {
 
+    // ************************************************************ Fields
+    // ************************************************************
     private final String userID;
     private String email;
     private String name;
@@ -9,9 +11,13 @@ public class Customer {
     private final String password;
     private String address;
     private int age;
-    public List<Flight> flightsRegisteredByUser;
-    public List<Integer> numOfTicketsBookedByUser;
+    private List<Flight> flightsRegisteredByUser;
+    private List<Integer> numOfTicketsBookedByUser;
     public static final List<Customer> customerCollection = User.getCustomersCollection();
+
+    // ************************************************************
+    // Behaviours/Methods
+    // ************************************************************
 
     Customer() {
         this.userID = null;
@@ -22,6 +28,7 @@ public class Customer {
         this.address = null;
         this.age = 0;
     }
+
 
     Customer(String name, String email, String password, String phone, String address, int age) {
         RandomGenerator random = new RandomGenerator();
@@ -37,110 +44,10 @@ public class Customer {
         this.numOfTicketsBookedByUser = new ArrayList<>();
     }
 
-    public void addNewCustomer(Customer customer) {
-        customerCollection.add(customer);
-    }
 
-
-    private String toString(int i) {
+    public String toString(int i) {
         return String.format("%10s| %-10d | %-10s | %-32s | %-7s | %-27s | %-35s | %-23s |", "", i,
                 randomIDDisplay(userID), name, age, email, address, phone);
-    }
-
-    public void searchUser(String ID) {
-        boolean isFound = false;
-        Customer customerWithTheID = customerCollection.get(0);
-        for (Customer c : customerCollection) {
-            if (ID.equals(c.getUserID())) {
-                System.out.printf("%-50sCustomer Found...!!!Here is the Full Record...!!!\n\n\n", " ");
-                displayHeader();
-                isFound = true;
-                customerWithTheID = c;
-                break;
-            }
-        }
-        if (isFound) {
-            System.out.println(customerWithTheID.toString(1));
-            System.out.printf(
-                    "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
-                    "");
-        } else {
-            System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", ID);
-        }
-    }
-
-    public void editUserInfo(String ID,List<String> details) {
-        Customer customer = findCustomerByID(ID);
-
-        if (customer != null) {
-            customer.setName(details.get(0));
-            customer.setEmail(details.get(1));
-            customer.setPhone(details.get(2));
-            customer.setAddress(details.get(3));
-            customer.setAge(Integer.parseInt(details.get(4)));
-            displayCustomersData(false);
-        } else {
-            System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", ID);
-        }
-    }
-    private Customer findCustomerByID(String ID) {
-        for (Customer c : customerCollection) {
-            if (ID.equals(c.getUserID())) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-
-    public void deleteUser(String ID) {
-        boolean isFound = false;
-        Iterator<Customer> iterator = customerCollection.iterator();
-        while (iterator.hasNext()) {
-            Customer customer = iterator.next();
-            if (ID.equals(customer.getUserID())) {
-                isFound = true;
-                break;
-            }
-        }
-        if (isFound) {
-            iterator.remove();
-            System.out.printf("\n%-50sPrinting all  Customer's Data after deleting Customer with the ID %s.....!!!!\n",
-                    "", ID);
-            displayCustomersData(false);
-        } else {
-            System.out.printf("%-50sNo Customer with the ID %s Found...!!!\n", " ", ID);
-        }
-    }
-
-
-    public void displayCustomersData(boolean showHeader) {
-        displayHeader();
-        Iterator<Customer> iterator = customerCollection.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            i++;
-            Customer c = iterator.next();
-            System.out.println(c.toString(i));
-            System.out.printf(
-                    "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
-                    "");
-        }
-    }
-
-    void displayHeader() {
-        System.out.println();
-        System.out.printf(
-                "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
-                "");
-        System.out.printf(
-                "%10s| SerialNum  |   UserID   | Passenger Names                  | Age     | EmailID\t\t       | Home Address\t\t\t     | Phone Number\t       |%n",
-                "");
-        System.out.printf(
-                "%10s+------------+------------+----------------------------------+---------+-----------------------------+-------------------------------------+-------------------------+\n",
-                "");
-        System.out.println();
-
     }
 
     String randomIDDisplay(String randomID) {
@@ -159,16 +66,26 @@ public class Customer {
         this.flightsRegisteredByUser.add(f);
         // numOfFlights++;
     }
+    void addNewTicketToNumOfTicketsBookedByUser(int numOfTicket){
+        this.numOfTicketsBookedByUser.add(numOfTicket);
+    }
+
+    void removeNewTicketToNumOfTicketsBookedByUser(int index){
+        this.numOfTicketsBookedByUser.remove(index);
+    }
+
 
     void addExistingFlightToCustomerList(int index, int numOfTickets) {
         int newNumOfTickets = numOfTicketsBookedByUser.get(index) + numOfTickets;
         this.numOfTicketsBookedByUser.set(index, newNumOfTickets);
     }
 
-    public List<Flight> getFlightsRegisteredByUser() {
-        return Collections.unmodifiableList(flightsRegisteredByUser);
-    }
+    // ************************************************************ Setters &
+    // Getters ************************************************************
 
+    public List<Flight> getFlightsRegisteredByUser() {
+        return flightsRegisteredByUser;
+    }
 
     public String getPassword() {
         return password;
@@ -199,9 +116,8 @@ public class Customer {
     }
 
     public List<Integer> getNumOfTicketsBookedByUser() {
-        return Collections.unmodifiableList(numOfTicketsBookedByUser);
+        return numOfTicketsBookedByUser;
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -221,5 +137,8 @@ public class Customer {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void setNumOfTicketsBookedByUser(List<Integer> ticketsBooked) {
     }
 }
