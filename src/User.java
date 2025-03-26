@@ -26,7 +26,6 @@ public class User {
 
     public static void main(String[] args) {
         int countNumOfUsers = 1;
-        RolesAndPermissions r1 = new RolesAndPermissions();
         FlightManager f1 = new FlightManager();
         FlightReservation bookingAndReserving = new FlightReservation();
         Customer c1 = new Customer();
@@ -34,7 +33,7 @@ public class User {
         CustomerService customerService = new CustomerService(c1);
         Scanner read = new Scanner(System.in);
 
-       
+
         System.out.println(
                 "\n\t\t\t\t\t+++++++++++++ Welcome to BAV AirLines +++++++++++++\n\nTo Further Proceed, Please enter a value.");
         System.out.println(
@@ -61,7 +60,7 @@ public class User {
                 /* Default username and password.... */
                 adminUserNameAndPassword[0][0] = "root";
                 adminUserNameAndPassword[0][1] = "root";
-                
+
                 System.out.print("\nEnter the UserName to login to the Management System :     ");
                 String username = read1.nextLine();
                 System.out.print("Enter the Password to login to the Management System :    ");
@@ -69,11 +68,13 @@ public class User {
                 System.out.println();
 
                 /* Checking the RolesAndPermissions...... */
-                if (r1.isPrivilegedUserOrNot(username, password) == -1) {
+                if (UserAuthManager.isAdminAuthenticated(username, password)
+                        == -1) {
                     System.out.printf(
                             "\n%20sERROR!!! Unable to login Cannot find user with the entered credentials.... Try Creating New Credentials or get yourself register by pressing 4....\n",
                             "");
-                } else if (r1.isPrivilegedUserOrNot(username, password) == 0) {
+                } else if (UserAuthManager.isAdminAuthenticated(username, password)
+                        == 0) {
                     System.out.println(
                             "You've standard/default privileges to access the data... You can just view customers data..."
                                     + "Can't perform any actions on them....");
@@ -82,6 +83,7 @@ public class User {
                     System.out.printf(
                             "%-20sLogged in Successfully as \"%s\"..... For further Proceedings, enter a value from below....",
                             "", username);
+
                     /*
                      * Going to Display the CRUD operations to be performed by the privileged
                      * user.....Which includes Creating, Updating
@@ -204,7 +206,7 @@ public class User {
                 String username = read1.nextLine();
                 System.out.print("Enter the Password to Register :     ");
                 String password = read1.nextLine();
-                while (r1.isPrivilegedUserOrNot(username, password) != -1) {
+                while (UserAuthManager.isAdminAuthenticated(username, password) != -1) {
                     System.out.print("ERROR!!! Admin with same UserName already exist. Enter new UserName:   ");
                     username = read1.nextLine();
                     System.out.print("Enter the Password Again:   ");
@@ -219,26 +221,26 @@ public class User {
                 countNumOfUsers++;
             } else if (desiredOption == 3) {
                 System.out.print("\n\nEnter the Email to Login : \t");
-                String userName = read1.nextLine();
+                String email = read1.nextLine();
                 System.out.print("Enter the Password : \t");
                 String password = read1.nextLine();
-                String[] result = r1.isPassengerRegistered(userName, password).split("-");
+                String[] result = UserAuthManager.isPassengerAuthenticated(email, password).split("-");
 
                 if (Integer.parseInt(result[0]) == 1) {
                     int desiredChoice;
                     System.out.printf(
                             "\n\n%-20sLogged in Successfully as \"%s\"..... For further Proceedings, enter a value from below....",
-                            "", userName);
+                            "", email);
                     do {
                         System.out.printf("\n\n%-60s+++++++++ 3rd Layer Menu +++++++++%50sLogged in as \"%s\"\n", "",
-                                "", userName);
+                                "", email);
                         System.out.printf("%-40s (a) Enter 1 to Book a flight....\n", "");
                         System.out.printf("%-40s (b) Enter 2 to update your Data....\n", "");
                         System.out.printf("%-40s (c) Enter 3 to delete your account....\n", "");
                         System.out.printf("%-40s (d) Enter 4 to Display Flight Schedule....\n", "");
                         System.out.printf("%-40s (e) Enter 5 to Cancel a Flight....\n", "");
                         System.out.printf("%-40s (f) Enter 6 to Display all flights registered by \"%s\"....\n", "",
-                                userName);
+                                email);
                         System.out.printf("%-40s (g) Enter 0 to Go back to the Main Menu/Logout....\n", "");
                         System.out.print("Enter the desired Choice :   ");
                         desiredChoice = read.nextInt();
@@ -264,7 +266,7 @@ public class User {
                             char confirmationChar = read1.nextLine().charAt(0);
                             if (confirmationChar == 'Y' || confirmationChar == 'y') {
                                 customerService.deleteUser(result[1]);
-                                System.out.printf("User %s's account deleted Successfully...!!!", userName);
+                                System.out.printf("User %s's account deleted Successfully...!!!", email);
                                 desiredChoice = 0;
                             } else {
                                 System.out.println("Action has been cancelled...");
@@ -385,7 +387,6 @@ public class User {
     public static List<Customer> getCustomersCollection() {
         return customersCollection;
     }
-
     public static Customer readCustomerData()
     {
         System.out.printf("\n\n\n%60s ++++++++++++++ Welcome to the Customer Registration Portal ++++++++++++++", "");
@@ -439,7 +440,7 @@ public class User {
         System.out.print("Enter the new age:\t");
         details.add(String.valueOf(read.nextInt()));
 
-        read.nextLine();
+        read.nextLine(); // Consume leftover newline
         return details;
     }
 
