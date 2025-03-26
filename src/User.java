@@ -77,12 +77,11 @@ public class User {
                     System.out.println(
                             "You've standard/default privileges to access the data... You can just view customers data..."
                                     + "Can't perform any actions on them....");
-                    c1.displayCustomersData(true);
+                    customerService.displayCustomersData(true);
                 } else {
                     System.out.printf(
                             "%-20sLogged in Successfully as \"%s\"..... For further Proceedings, enter a value from below....",
                             "", username);
-
                     /*
                      * Going to Display the CRUD operations to be performed by the privileged
                      * user.....Which includes Creating, Updating
@@ -108,18 +107,18 @@ public class User {
                         if (desiredOption == 1) {
                             Customer customer = readCustomerData();
 
-                            c1.addNewCustomer(customer);
+                            customerService.addNewCustomer(customer);
                         } else if (desiredOption == 2) {
                             /*
                              * If 2 is entered by the privileged user, then call the search method of the
                              * Customer class
                              */
-                            
-                            c1.displayCustomersData(false);
+
+                            customerService.displayCustomersData(false);
                             System.out.print("Enter the CustomerID to Search :\t");
                             String customerID = read1.nextLine();
                             System.out.println();
-                            c1.searchUser(customerID);
+                            customerService.searchUser(customerID);
                         } else if (desiredOption == 3) {
                             /*
                              * If 3 is entered by the user, then call the update method of the Customer
