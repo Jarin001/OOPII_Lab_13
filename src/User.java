@@ -257,13 +257,13 @@ public class User {
                             bookingAndReserving.bookFlight(flightToBeBooked, numOfTickets, result[1]);
                         } else if (desiredChoice == 2) {
                             List<String> details = readCustomerInfo();
-                            c1.editUserInfo(result[1],details);
+                            customerService.editUserInfo(result[1],details);
                         } else if (desiredChoice == 3) {
                             System.out.print(
                                     "Are you sure to delete your account...It's an irreversible action...Enter Y/y to confirm...");
                             char confirmationChar = read1.nextLine().charAt(0);
                             if (confirmationChar == 'Y' || confirmationChar == 'y') {
-                                c1.deleteUser(result[1]);
+                                customerService.deleteUser(result[1]);
                                 System.out.printf("User %s's account deleted Successfully...!!!", userName);
                                 desiredChoice = 0;
                             } else {
